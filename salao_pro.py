@@ -1,4 +1,12 @@
-import streamlit as st
+import os, pathlib, streamlit as st
+try:
+    _idx = pathlib.Path(st.__file__).parent / "static" / "index.html"
+    _h = _idx.read_text(encoding="utf-8")
+    if "ca-pub-6467621234967556" not in _h:
+        _tag = '<meta name="google-adsense-account" content="ca-pub-6467621234967556"><script async src="https://pagead2' + '://" crossorigin="anonymous"></script></head>'
+        _idx.write_text(_h.replace("</head>", _tag), encoding="utf-8")
+except Exception:
+    pass
 import sqlite3, pandas as pd, urllib.parse, hashlib, io
 from datetime import datetime, date
 from gtts import gTTS
