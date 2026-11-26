@@ -3,6 +3,24 @@ import sqlite3, pandas as pd, urllib.parse, hashlib, io
 from datetime import datetime, date
 from gtts import gTTS
 import qrcode
+import streamlit.components.v1 as components
+components.html("""
+<script>
+  if (!window.parent.document.querySelector('meta[name="google-adsense-account"]')) {
+    var m = window.parent.document.createElement('meta');
+    m.name = 'google-adsense-account';
+    m.content = 'ca-pub-6467621234967556';
+    window.parent.document.head.appendChild(m);
+  }
+  if (!window.parent.document.querySelector('script[src*="ca-pub-6467621234967556"]')) {
+    var s = window.parent.document.createElement('script');
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    s.src = 'https://pagead2' + '://';
+    window.parent.document.head.appendChild(s);
+  }
+</script>
+""", height=0)
 
 st.set_page_config(page_title="Studio & Salão Pro MZ — Beleza, Estética & Unhas", page_icon="💇‍♀️", layout="wide")
 
@@ -471,3 +489,18 @@ elif modo_acesso == "👑 Painel do Fornecedor (SaaS)":
             conn.execute("UPDATE saloes SET ativo=0 WHERE id=?", (int(sid_g),)); conn.commit(); st.rerun()
         if bg3.button("🔑 Resetar Senha para 1234"):
             conn.execute("UPDATE saloes SET senha_dono='1234' WHERE id=?", (int(sid_g),)); conn.commit(); st.success("Senha redefinida para 1234!"); st.rerun()
+
+st.divider()
+with st.expander("📚 Guias de Beleza, Cuidados & Política de Privacidade (Studio & Salão Pro MZ)"):
+    st.markdown("""
+    ### 💅 Cuidados Essenciais com Unhas de Gel, Acrílico e Cabelo
+    * **Manutenção Regular:** Para manter as unhas de gel ou acrílico saudáveis e sem infiltrações, recomenda-se a manutenção a cada 15 a 21 dias com uma profissional qualificada.
+    * **Hidratação Capilar & Tranças:** Antes e depois de aplicar tranças (Box Braids, Knotless), hidrate o couro cabeludo e evite tensão excessiva nos fios.
+    * **Higiene & Esterilização:** Todos os salões parceiros da plataforma seguem protocolos rigorosos de higienização de alicates, brocas e escovas.
+
+    ---
+    ### 🔒 Política de Privacidade, Cookies & Termos de Uso (Google AdSense)
+    * **Sobre a Plataforma:** O **Studio & Salão Pro MZ** é um portal digital moçambicano de agendamento online, galeria de modelos e gestão para salões de beleza, estética e barbearias.
+    * **Publicidade e Cookies (Google AdSense):** Este site utiliza serviços de publicidade fornecidos pelo Google (Google AdSense), que utiliza cookies para apresentar anúncios relevantes com base nas visitas anteriores dos utilizadores. Pode gerir ou desativar a publicidade personalizada nas Definições de Anúncios do Google.
+    * **Contacto Oficial:** Responsável: Leonardo Jacinto Francisco • Marracuene / Maputo, Moçambique • WhatsApp: +258 84 570 7294.
+    """)
